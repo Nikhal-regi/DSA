@@ -1,0 +1,22 @@
+class Solution {
+public:
+    vector<int> twoSum(vector<int>& nums, int target) {
+        // for(int i=0;i<nums.size();i++){
+        //     for(int j=i+1;j<nums.size();j++){
+        //         if(nums[i]+nums[j]==target){
+        //             return {i,j};
+        //         }
+        //     }
+        // }
+        unordered_map<int,int> m;
+        for(auto i=0;i<nums.size();i++){
+            if( m.count(target-nums[i]) && m[target-nums[i]]!=i ){
+                return{i,m[target-nums[i]]};
+            }
+            //the below is not used in above cause the second condition of if will cause 
+            //prob if there is same number twice.
+            m[nums[i]]=i;
+        }
+    return {};
+    }
+};
