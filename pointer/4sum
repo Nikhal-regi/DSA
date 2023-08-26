@@ -1,0 +1,31 @@
+class Solution {
+public:
+    vector<vector<int>> fourSum(vector<int>& nums, int target) {
+        using ll=long long;
+        int n=nums.size();
+        vector<vector<int>> out;
+        set<vector<int>> unique;
+        sort(nums.begin(),nums.end());
+        for(int i=0;i<n-3;i++){
+            if(i>0 && nums[i] == nums[i-1]) continue;//skip same element for time 
+            for(int j=i+1;j<n-2;j++){
+                if(j!=i+1 && nums[j] == nums[j-1]) continue; //skip same element for time
+                ll newtarget=(ll)target-(ll)nums[i]-(ll)nums[j];
+                int low=j+1,high=n-1;
+                while(low<high){
+                    if(nums[low]+nums[high]>newtarget) high--;
+                    else if(nums[low]+nums[high]<newtarget) low++;
+                    else{
+                        unique.insert({nums[i],nums[j],nums[low],nums[high]});
+                        //remember low and high should be update
+                        low++;high--;
+                    }
+                }
+            }
+        }
+        for(auto x:unique){
+            out.push_back(x);
+        }
+        return out;
+    }
+};
