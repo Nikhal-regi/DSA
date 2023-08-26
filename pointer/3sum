@@ -1,0 +1,24 @@
+class Solution {
+public:
+    vector<vector<int>> threeSum(vector<int>& nums) {
+        sort(nums.begin(),nums.end());
+        set<vector<int>> ans;
+        for(int i=0;i<nums.size();i++){
+            int j=i+1,k=nums.size()-1;
+            while(j<k){
+                int sum1=nums[i]+nums[j]+nums[k];
+                if(sum1==0){
+                    ans.insert({nums[i],nums[j],nums[k]});
+                    j++;k--;
+                }
+                if(sum1<0){j++;}
+                if(sum1>0){k--;}
+            }
+        }
+        //return should be vector not a set.
+        vector<vector<int>> output;
+        output.reserve(nums.size());
+        for(auto triplets : ans) output.push_back(triplets);
+        return output;
+    }
+};
