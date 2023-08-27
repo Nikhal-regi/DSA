@@ -1,0 +1,22 @@
+class Solution {
+public:
+    int searchInsert(vector<int>& nums, int target) {
+        //binary search without using the values.
+        //learn about iterator functions too
+        //return lower_bound(nums.begin(),nums.end(),target)-nums.begin();
+        int n=nums.size();
+        if(target>nums[n-1]) return n;
+        int l=0, r=n-1;
+        while(l<r){
+            int m=l+(r-l)/2;
+            if(nums[m]>target){
+                r=m;
+            }else if(nums[m]<target){
+                l=m+1;
+            }else{
+                return m;
+            }
+        }
+        return l;
+    }
+};
