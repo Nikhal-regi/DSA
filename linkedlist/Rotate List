@@ -1,0 +1,62 @@
+class Solution {
+public:
+    int length(ListNode *head){
+        int ans=0;
+        while(head!=NULL){
+            head=head->next;
+            ans++;
+        }
+        return ans;
+    }
+    ListNode* reverse(ListNode *head){
+        ListNode *prev=NULL,*curr=NULL,*ahead=head;
+        while(ahead!=NULL){
+            curr=ahead;
+            ahead=ahead->next;
+            curr->next=prev;
+            prev=curr;
+        }
+        return curr;
+    }
+    ListNode* rotateRight(ListNode* head, int k) {
+        //two method learn both reverse method and 4 pointer method
+        if(head==NULL || head->next==NULL) return head;
+        int n=length(head);
+        k=k%n;
+        if(k==0) return head;
+
+        //reverse method method-1 reverse whole list then split at k then reverse 
+        //both halfs
+        ListNode *newhead=reverse(head);
+        ListNode *p1=newhead,*p2=newhead,*prev1=newhead;
+        while(k--){
+            prev1=p1;
+            p1=p1->next;
+        }
+        prev1->next=NULL;
+        // 5 4 3 2 1
+        //5 prev1=4 p1=3 2 1
+        //4 5 1 2 3
+        ListNode *p3=reverse(p2),*p4=reverse(p1);
+        p1=p3;
+        while(p1->next!=NULL)  p1=p1->next;
+        p1->next=p4;
+        return p3;
+
+        
+        //4 pointer method
+        // ListNode *p1=head,*p2=head,*prev1=head,*prev2=head;
+        // while(k--) p1=p1->next;
+        // while(p1!=NULL){
+        //     prev1=p1;
+        //     prev2=p2;
+        //     p1=p1->next;
+        //     p2=p2->next;
+        // }
+        // //3 4 5 1 2
+        // //1 2 prev2=3 p2=4 prev1=5 p1=null
+        // prev2->next=NULL;
+        // prev1->next=head;
+        // return p2;
+    }
+};
