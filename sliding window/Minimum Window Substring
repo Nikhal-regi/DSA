@@ -1,0 +1,32 @@
+class Solution {
+public:
+    string minWindow(string s, string t) {
+        //try to do with one map.
+        if(t=="" && t.size()>s.size()) return "";
+        unordered_map<char,int> tmap,smap;
+        for(auto it:t){
+            tmap[it]++;
+        }
+        int need=tmap.size(),have=0;
+        int l=0,r=0;
+        int ans=-1,leng=INT_MAX;
+        while(r<s.size()){
+            char add=s[r];
+            smap[add]++;
+            if(tmap.count(add) && tmap[add]==smap[add]) have++;
+            while(have==need){
+                if(r-l+1<leng){
+                    leng=r-l+1;
+                    ans=l;
+                }
+                char rem=s[l];
+                smap[rem]--;
+                if(tmap.count(rem) && tmap[rem]>smap[rem]) have--;
+                l++;
+            }
+            r++;
+        }
+        if(leng!=INT_MAX) return s.substr(ans,leng); 
+        return "";
+    }
+};
